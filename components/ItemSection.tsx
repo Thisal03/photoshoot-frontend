@@ -91,7 +91,7 @@ export function ItemSection({
                             )}
                             <button
                                 onClick={() => removeItem(sectionKey, item.id)}
-                                className="opacity-0 group-hover:opacity-100 p-1.5 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-500 rounded-lg transition-all"
+                                className="opacity-0 group-hover:opacity-100 p-1.5 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-500 rounded-lg transition-all cursor-pointer"
                             >
                                 <X className="w-4 h-4" />
                             </button>
@@ -111,7 +111,7 @@ export function ItemSection({
                             <select
                                 value={selectedType}
                                 onChange={(e) => setSelectedType(e.target.value as ItemType)}
-                                className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all"
+                                className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all cursor-pointer"
                             >
                                 {itemTypes.map((t) => (
                                     <option key={t} value={t}>
@@ -132,7 +132,7 @@ export function ItemSection({
                                         <button
                                             key={preset}
                                             onClick={() => setDescription(preset)}
-                                            className="text-[11px] px-2.5 py-1 bg-white dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-800 rounded-full hover:border-indigo-500/50 hover:text-indigo-600 transition-all"
+                                            className="text-[11px] px-2.5 py-1 bg-white dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-800 rounded-full hover:border-indigo-500/50 hover:text-indigo-600 transition-all cursor-pointer"
                                         >
                                             {preset}
                                         </button>
@@ -187,7 +187,7 @@ export function ItemSection({
                                 <img src={imageUrl} alt="Reference" className="w-full h-full object-cover" />
                                 <button
                                     onClick={() => setImageUrl("")}
-                                    className="absolute top-1 right-1 p-1 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors"
+                                    className="absolute top-1 right-1 p-1 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors cursor-pointer"
                                 >
                                     <X className="w-3 h-3" />
                                 </button>
@@ -199,7 +199,7 @@ export function ItemSection({
                 <button
                     onClick={handleAddItem}
                     disabled={!description && !imageUrl}
-                    className="w-full flex items-center justify-center gap-2 bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 px-4 py-3 rounded-xl font-semibold hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full flex items-center justify-center gap-2 bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 px-4 py-3 rounded-xl font-semibold hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                 >
                     <Plus className="w-5 h-5" />
                     Add to {title}

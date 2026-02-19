@@ -1,11 +1,12 @@
 "use client";
 
 import { usePhotoshootStore } from "@/store/usePhotoshootStore";
-import { Settings, Image as ImageIcon, Sparkles, Zap, Download, Loader2, Plus } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Settings, Image as ImageIcon, Sparkles, Zap, Download, Loader2, Plus, Maximize2 } from "lucide-react";
+import { cn, forceDownload } from "@/lib/utils";
 import { useState } from "react";
 import { generatePhotoshoot } from "@/lib/api";
 import { motion, AnimatePresence } from "framer-motion";
+import { ImageModal } from "./ImageModal";
 
 const PLATFORM_OPTIONS = {
     "Instagram Portrait (4:5)": "4:5",
@@ -23,6 +24,7 @@ export function OutputSettings() {
     const [results, setResults] = useState<string[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [progress, setProgress] = useState(0);
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     const handleGenerate = async () => {
         const totalItems = config.model.length + config.outfits.length + config.accessories.length + config.environment.length;
@@ -86,7 +88,7 @@ export function OutputSettings() {
                                         aspect_ratio: PLATFORM_OPTIONS[preset as keyof typeof PLATFORM_OPTIONS],
                                     });
                                 }}
-                                className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-indigo-500/20"
+                                className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-indigo-500/20 cursor-pointer"
                             >
                                 {Object.keys(PLATFORM_OPTIONS).map((opt) => (
                                     <option key={opt} value={opt}>
@@ -113,7 +115,7 @@ export function OutputSettings() {
                                 <select
                                     value={config.output.quality}
                                     onChange={(e) => updateOutput({ quality: e.target.value as any })}
-                                    className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-indigo-500/20"
+                                    className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-indigo-500/20 cursor-pointer"
                                 >
                                     {QUALITY_OPTIONS.map((opt) => (
                                         <option key={opt} value={opt}>
@@ -136,7 +138,7 @@ export function OutputSettings() {
                                             })
                                         }
                                         className={cn(
-                                            "px-3 py-2 rounded-lg text-xs font-semibold border transition-all",
+                                            "px-3 py-2 rounded-lg text-xs font-semibold border transition-all cursor-pointer",
                                             (opt.includes("Subtle") && config.output.batch_variety === "subtle_variations") ||
                                                 (opt.includes("Dynamic") && config.output.batch_variety === "dynamic_angles")
                                                 ? "bg-indigo-600 border-indigo-500 text-white"
@@ -178,7 +180,7 @@ export function OutputSettings() {
                         <button
                             onClick={handleGenerate}
                             disabled={isGenerating}
-                            className="w-full relative group bg-indigo-600 hover:bg-indigo-500 text-white py-4 rounded-xl font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden active:scale-[0.98]"
+                            className="w-full relative group bg-indigo-600 hover:bg-indigo-500 text-white py-4 rounded-xl font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer overflow-hidden active:scale-[0.98]"
                         >
                             <div className="relative z-10 flex items-center justify-center gap-2">
                                 {isGenerating ? (
@@ -234,16 +236,21 @@ export function OutputSettings() {
                                 >
                                     <img src={url} alt={`Generated result ${idx + 1}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2">
-                                            <a
-                                                href={url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="flex-1 flex items-center justify-center gap-2 bg-white text-zinc-950 py-2.5 rounded-lg text-sm font-bold hover:bg-zinc-100 transition-colors"
+                                        <div className="absolute bottom-4 left-4 right-4 flex flex-col gap-2">
+                                            <button
+                                                onClick={() => setSelectedImage(url)}
+                                                className="w-full flex items-center justify-center gap-2 bg-indigo-600 text-white py-2.5 rounded-lg text-sm font-bold hover:bg-indigo-500 transition-colors cursor-pointer"
+                                            >
+                                                <Maximize2 className="w-4 h-4" />
+                                                Full View
+                                            </button>
+                                            <button
+                                                onClick={() => forceDownload(url, `photoshoot-${idx + 1}.png`)}
+                                                className="w-full flex items-center justify-center gap-2 bg-white text-zinc-950 py-2.5 rounded-lg text-sm font-bold hover:bg-zinc-100 transition-colors cursor-pointer"
                                             >
                                                 <Download className="w-4 h-4" />
                                                 Download
-                                            </a>
+                                            </button>
                                         </div>
                                     </div>
                                 </motion.div>
@@ -252,6 +259,12 @@ export function OutputSettings() {
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            <ImageModal
+                isOpen={!!selectedImage}
+                onClose={() => setSelectedImage(null)}
+                imageUrl={selectedImage || ""}
+            />
 
             {/* JSON Previews (Expanders) */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">

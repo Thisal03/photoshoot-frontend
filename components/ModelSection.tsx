@@ -92,7 +92,7 @@ export function ModelSection() {
                             </div>
                             <button
                                 onClick={() => removeItem("model", item.id)}
-                                className="opacity-0 group-hover:opacity-100 p-1.5 hover:bg-red-950/30 hover:text-red-500 rounded-lg transition-all"
+                                className="opacity-0 group-hover:opacity-100 p-1.5 hover:bg-red-950/30 hover:text-red-500 rounded-lg transition-all cursor-pointer"
                             >
                                 <X className="w-4 h-4" />
                             </button>
@@ -113,7 +113,7 @@ export function ModelSection() {
                                         key={t}
                                         onClick={() => setSelectedType(t)}
                                         className={cn(
-                                            "px-4 py-2 rounded-full text-xs font-medium transition-all border",
+                                            "px-4 py-2 rounded-full text-xs font-medium transition-all border cursor-pointer",
                                             selectedType === t
                                                 ? "bg-white text-zinc-950 border-white"
                                                 : "bg-zinc-800 text-zinc-400 border-zinc-700 hover:border-zinc-500"
@@ -161,7 +161,7 @@ export function ModelSection() {
                                                                 newUrls[idx] = "";
                                                                 setMultiAngleUrls(newUrls);
                                                             }}
-                                                            className="absolute top-1 right-1 p-1 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors"
+                                                            className="absolute top-1 right-1 p-1 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors cursor-pointer"
                                                         >
                                                             <X className="w-3 h-3" />
                                                         </button>
@@ -216,7 +216,7 @@ export function ModelSection() {
                                         <img src={singleImageUrl} className="w-full h-full object-cover" />
                                         <button
                                             onClick={() => setSingleImageUrl("")}
-                                            className="absolute top-2 right-2 p-1 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors"
+                                            className="absolute top-2 right-2 p-1 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors cursor-pointer"
                                         >
                                             <X className="w-4 h-4" />
                                         </button>
@@ -234,7 +234,7 @@ export function ModelSection() {
                             ? multiAngleUrls.some((u) => !u)
                             : !description && !singleImageUrl
                     }
-                    className="w-full flex items-center justify-center gap-2 bg-white text-zinc-950 px-4 py-4 rounded-xl font-bold hover:bg-zinc-100 transition-all disabled:opacity-30 disabled:grayscale disabled:cursor-not-allowed shadow-lg shadow-white/5 active:scale-[0.98]"
+                    className="w-full flex items-center justify-center gap-2 bg-white text-zinc-950 px-4 py-4 rounded-xl font-bold hover:bg-zinc-100 transition-all disabled:opacity-30 disabled:grayscale disabled:cursor-not-allowed cursor-pointer shadow-lg shadow-white/5 active:scale-[0.98]"
                 >
                     <Plus className="w-5 h-5" />
                     Add to Model Configuration

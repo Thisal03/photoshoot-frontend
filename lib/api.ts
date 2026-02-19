@@ -1,8 +1,51 @@
 import { PhotoshootConfig, PhotoshootItem } from '@/types/photoshoot';
 
+export async function quickUpdate(payload: {
+    prompt: string;
+    image_urls?: string[];
+    aspect_ratio?: string;
+    resolution?: string;
+}): Promise<{ success: boolean; image?: string; error?: string }> {
+    try {
+        const baseUrl = process.env.NEXT_PUBLIC_FLASK_API_URL || '';
+        const endpoint = baseUrl.endsWith('/') ? `${baseUrl}quick-update` : `${baseUrl}/quick-update`;
+
+        process.env.NODE_ENV === 'development' && console.log(`[API] Fetching from: ${endpoint}`);
+
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Flask Backend Error: ${errorText}`);
+        }
+
+        const result = await response.json();
+
+        if (result.status === 'success' && result.data?.image) {
+            return { success: true, image: result.data.image };
+        } else {
+            return { success: false, error: result.message || "Quick update failed" };
+        }
+    } catch (error: any) {
+        console.error("Quick Update Error:", error);
+        return { success: false, error: error.message };
+    }
+}
+
 export async function generatePhotoshoot(config: PhotoshootConfig): Promise<{ success: boolean; images?: string[]; error?: string }> {
     try {
-        const response = await fetch(process.env.NEXT_PUBLIC_FLASK_API_URL || '', {
+        const baseUrl = process.env.NEXT_PUBLIC_FLASK_API_URL || '';
+        const endpoint = baseUrl.endsWith('/') ? `${baseUrl}generate` : `${baseUrl}/generate`;
+
+        process.env.NODE_ENV === 'development' && console.log(`[API] Fetching from: ${endpoint}`);
+
+        const response = await fetch(endpoint, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
