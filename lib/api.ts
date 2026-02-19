@@ -2,12 +2,7 @@ import { PhotoshootConfig, PhotoshootItem } from '@/types/photoshoot';
 
 export async function generatePhotoshoot(config: PhotoshootConfig): Promise<{ success: boolean; images?: string[]; error?: string }> {
     try {
-        const baseUrl = process.env.NEXT_PUBLIC_FLASK_API_URL || '';
-        const endpoint = baseUrl.endsWith('/') ? `${baseUrl}generate` : `${baseUrl}/generate`;
-
-        console.log(`[API] Fetching from: ${endpoint}`);
-
-        const response = await fetch(endpoint, {
+        const response = await fetch(process.env.NEXT_PUBLIC_FLASK_API_URL || '', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
