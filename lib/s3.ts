@@ -4,24 +4,43 @@ export async function uploadToS3(
     fileName?: string
 ): Promise<{ success: boolean; url?: string; error?: string }> {
     try {
-        const formData = new FormData();
-        formData.append("file", file, fileName);
-        formData.append("folder", folder);
+        // Step 1: Get presigned URL from our API
+        const name = fileName || (file as File).name || `file_${Date.now()}`;
+        const type = file.type || "image/jpeg";
 
-        const response = await fetch("/api/upload", {
+        const presignedRes = await fetch("/api/upload", {
             method: "POST",
-            body: formData,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                fileName: name,
+                fileType: type,
+                folder,
+            }),
         });
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || "Upload failed");
+        if (!presignedRes.ok) {
+            const errorData = await presignedRes.json();
+            throw new Error(errorData.error || "Failed to get upload permit");
         }
 
-        const { url } = await response.json();
-        return { success: true, url };
+        const { uploadUrl, finalUrl } = await presignedRes.json();
+
+        // Step 2: Upload directly to S3 using the presigned URL
+        const uploadRes = await fetch(uploadUrl, {
+            method: "PUT",
+            body: file,
+            headers: {
+                "Content-Type": type,
+            },
+        });
+
+        if (!uploadRes.ok) {
+            throw new Error(`Cloud upload failed: ${uploadRes.statusText}`);
+        }
+
+        return { success: true, url: finalUrl };
     } catch (error: any) {
-        console.error("Upload Error:", error);
+        console.error("Direct Upload Error:", error);
         return { success: false, error: error.message };
     }
 }
