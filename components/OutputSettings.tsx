@@ -9,10 +9,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ImageModal } from "./ImageModal";
 
 const PLATFORM_OPTIONS = {
+    "Square (1:1)": "1:1",
+    "Standard / Tablet (4:3)": "4:3",
+    "Portrait Tablet (3:4)": "3:4",
+    "Widescreen / Video (16:9)": "16:9",
+    "Vertical / Story (9:16)": "9:16",
+    "Classic Portrait (2:3)": "2:3",
+    "Classic Landscape (3:2)": "3:2",
     "Instagram Portrait (4:5)": "4:5",
-    "Instagram Story (9:16)": "9:16",
-    "Instagram Square (1:1)": "1:1",
-    "Default (2:3)": "2:3",
+    "Landscape / Art Print (5:4)": "5:4"
 };
 
 const QUALITY_OPTIONS = ["1K", "2K", "4K"];

@@ -90,10 +90,15 @@ export function QuickUpdateSection() {
                                     onChange={(e) => setAspectRatio(e.target.value)}
                                     className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-indigo-500/20 cursor-pointer"
                                 >
-                                    <option value="4:5">Instagram Portrait (4:5)</option>
-                                    <option value="9:16">Story (9:16)</option>
                                     <option value="1:1">Square (1:1)</option>
-                                    <option value="2:3">Default (2:3)</option>
+                                    <option value="4:3">Standard / Tablet (4:3)</option>
+                                    <option value="3:4">Portrait Tablet (3:4)</option>
+                                    <option value="16:9">Widescreen / Video (16:9)</option>
+                                    <option value="9:16">Vertical / Story (9:16)</option>
+                                    <option value="2:3">Classic Portrait (2:3)</option>
+                                    <option value="3:2">Classic Landscape (3:2)</option>
+                                    <option value="4:5">Instagram Portrait (4:5)</option>
+                                    <option value="5:4">Landscape / Art Print (5:4)</option>
                                 </select>
                             </div>
                             <div>
@@ -218,10 +223,10 @@ export function QuickUpdateSection() {
                                 </div>
                                 <div className="max-w-[180px] mx-auto">
                                     <p className="text-sm font-medium text-zinc-500">
-                                        {isGenerating ? "AI is perfecting your update..." : "Your updated image will appear here"}
+                                        {isGenerating ? "Gemini is perfecting your update..." : "Your updated image will appear here"}
                                     </p>
                                     <p className="text-[10px] text-zinc-700 mt-2 uppercase tracking-widest leading-relaxed">
-                                        Powered by AI
+                                        Powered by Gemini
                                     </p>
                                 </div>
                             </div>
