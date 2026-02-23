@@ -185,7 +185,7 @@ export default function PhotoshootGenerator() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-zinc-500 text-xs font-medium">
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-            System Online • Powered by Gemini AI & Supabase
+            System Online • Powered by AI
           </div>
           <div className="flex items-center gap-6">
             <a href="#" className="hover:text-white transition-colors cursor-pointer">Documentation</a>

@@ -218,10 +218,10 @@ export function QuickUpdateSection() {
                                 </div>
                                 <div className="max-w-[180px] mx-auto">
                                     <p className="text-sm font-medium text-zinc-500">
-                                        {isGenerating ? "Gemini is perfecting your update..." : "Your updated image will appear here"}
+                                        {isGenerating ? "AI is perfecting your update..." : "Your updated image will appear here"}
                                     </p>
                                     <p className="text-[10px] text-zinc-700 mt-2 uppercase tracking-widest leading-relaxed">
-                                        Powered by Gemini 3.0
+                                        Powered by AI
                                     </p>
                                 </div>
                             </div>
